@@ -1,13 +1,13 @@
 let body = document.querySelector('body');
-
 let products_div = document.createElement('div');
-if (document.createElement('div')) {
+
+if (products_div) {
     products_div.className = 'products';
     body.prepend(products_div);
 }
 
 let div_add_products = document.createElement('div');
-if (document.createElement('div')) {
+if (div_add_products) {
     div_add_products.className = 'add_products';
     products_div.append(div_add_products);
 
@@ -28,9 +28,7 @@ localStorage.setItem('card', JSON.stringify({
 
 let locStor_card = localStorage.getItem('card');
 let card = JSON.parse(locStor_card);
-
 let products = JSON.parse(localStorage.getItem('products')) || [];
-
 let product_counter = parseInt(localStorage.getItem('counter')) || 0;
 
 console.log("Initial product counter:", product_counter);
@@ -54,60 +52,34 @@ function createProdcut(card) {
     }
 }
 
-
 function appendProducts(product) {
     let prod_card_div = document.createElement('div');
     prod_card_div.className = 'products__card';
+
+    prod_card_div.innerHTML = `
+        <div class="card__image-block">
+            <img class="card__image" src="${product.image}" alt="Product Image">
+        </div>
+        <div class="card__description">
+            <div class="card__meta">
+                <div class="card__rating">${product.rating}</div>
+                <div class="card__value">${product.calorie}</div>
+            </div>
+            <div class="card__name">${product.card_name}</div>
+            <div class="card__cost">${product.price}</div>
+        </div>
+        <div class="delete-icon"></div>
+    `;
+
     products_div.prepend(prod_card_div);
 
-    let card__image_div = document.createElement('div');
-    card__image_div.className = 'card__image-block';
-    prod_card_div.append(card__image_div);
-
-    let card__image_img = document.createElement('img');
-    card__image_img.className = 'card__image';
-    card__image_img.src = product.image;
-    card__image_div.append(card__image_img);
-
-    let card__descript_div = document.createElement('div');
-    card__descript_div.className = 'card__description';
-    card__image_div.after(card__descript_div);
-
-    let card__meta_div = document.createElement('div');
-    card__meta_div.className = 'card__meta';
-    card__descript_div.append(card__meta_div);
-
-    let card__rating_div = document.createElement('div');
-    card__rating_div.className = 'card__rating';
-    card__rating_div.innerHTML = product.rating;
-    card__meta_div.append(card__rating_div);
-
-    let card__value_div = document.createElement('div');
-    card__value_div.className = 'card__value';
-    card__value_div.innerHTML = product.calorie;
-    card__rating_div.after(card__value_div);
-
-    let card__name_div = document.createElement('div');
-    card__name_div.className = 'card__name';
-    card__name_div.innerHTML = product.card_name;
-    card__meta_div.after(card__name_div);
-
-    let card__cost_div = document.createElement('div');
-    card__cost_div.className = 'card__cost';
-    card__cost_div.innerHTML = product.price;
-    card__name_div.after(card__cost_div);
-
-    
-    let delete_icon = document.createElement('div');
-    delete_icon.className = 'delete-icon';
-    prod_card_div.append(delete_icon);
-
+    let delete_icon = prod_card_div.querySelector('.delete-icon');
     delete_icon.addEventListener('click', function() {
         prod_card_div.remove();
         products = products.filter(test_product => test_product.counter !== product.counter);
         localStorage.setItem('products', JSON.stringify(products));
     });
-};
+}
 
 div_add_products.addEventListener('click', function () {
     appendProducts(card);

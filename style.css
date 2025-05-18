@@ -110,12 +110,13 @@
     width: 15%;
     font-family: "Montserrat", sans-serif;  
     border: solid 2px rgba(129, 125, 125, 0.446);
-    height: 300px;
+    height: 280px;
     position: relative;
     font-size: 16px;
     margin: 10px;
     border-radius: 10px;
     cursor: pointer;
+    padding: 10px;
 }
 
 .products__add img {

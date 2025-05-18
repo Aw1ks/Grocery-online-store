@@ -84,18 +84,71 @@ function appendProducts(product) {
 
 let img_add = document.querySelector('.products__add img');
 
-
 function hideImage() {
-    img_add.classList.add('hide');
+    // img_add.classList.add('hide');
+    img_add.remove();
 }
 
 
-div_add_products.addEventListener('click', function () {
-    appendProducts(card);
-    createProdcut(card);
+function createInput(labelText, inputClass, inputId) {
+    let label = document.createElement('label');
+    label.textContent = labelText;
 
-    hideImage();
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.classList.add('text-field', inputClass);
+    input.id = inputId;
+    input.required = true;
+
+    label.appendChild(input);
+    return label;
+}
+
+
+let presence_product_form = false;
+
+div_add_products.addEventListener('click', function () {
+    if (!presence_product_form) {
+
+        let div_form_fields = document.createElement('div');
+        div_form_fields.classList.add('form__fields');
+
+        let form_add__form = document.createElement('form');
+        form_add__form.classList.add('add__form');
+
+        let image_form = createInput('Путь до изображения:', 'form__image-path', 'image-path');
+        let rating_form = createInput('Оценка товара:', 'form__rating', 'rating');
+        let value_form = createInput('Калорийность товара:', 'form__value', 'value');
+        let name_form = createInput('Название товара:', 'form__name', 'name');
+        let cost_form = createInput('Цена товара:', 'form__cost', 'cost');
+
+        form_add__form.appendChild(image_form);
+        form_add__form.appendChild(rating_form);
+        form_add__form.appendChild(value_form);
+        form_add__form.appendChild(name_form);
+        form_add__form.appendChild(cost_form);
+
+        let div_button_block = document.createElement('div');
+        div_button_block.classList.add('button-block');
+
+        let button_form__button = document.createElement('button');
+        button_form__button.textContent = 'Отправить';
+        button_form__button.classList.add('form__button');
+        button_form__button.type = 'submit';
+
+        div_button_block.appendChild(button_form__button);
+
+        div_form_fields.appendChild(form_add__form);
+        div_form_fields.appendChild(div_button_block);
+        div_add_products.appendChild(div_form_fields)
+
+        // appendProducts(card);
+        // createProdcut(card);
+        hideImage();
+    }
+    presence_product_form = true;
 });
+
 
 
 window.onload = function () {
@@ -105,5 +158,3 @@ window.onload = function () {
         });
     }
 };
-
-

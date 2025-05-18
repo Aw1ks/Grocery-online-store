@@ -8,7 +8,7 @@ if (products_div) {
 
 let div_add_products = document.createElement('div');
 if (div_add_products) {
-    div_add_products.className = 'add_products';
+    div_add_products.className = 'products__add';
     products_div.append(div_add_products);
 
     let img_add = document.createElement('img');
@@ -81,10 +81,22 @@ function appendProducts(product) {
     });
 }
 
+
+let img_add = document.querySelector('.products__add img');
+
+
+function hideImage() {
+    img_add.classList.add('hide');
+}
+
+
 div_add_products.addEventListener('click', function () {
     appendProducts(card);
     createProdcut(card);
+
+    hideImage();
 });
+
 
 window.onload = function () {
     if (products.length > 0) {
@@ -93,3 +105,5 @@ window.onload = function () {
         });
     }
 };
+
+

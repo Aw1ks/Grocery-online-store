@@ -100,7 +100,13 @@
     height: 18px;
 }
 
-.add_products {
+.products__add {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    cursor: pointer;
+    position: relative; 
+
     width: 15%;
     font-family: "Montserrat", sans-serif;  
     border: solid 2px rgba(129, 125, 125, 0.446);
@@ -112,10 +118,15 @@
     cursor: pointer;
 }
 
-.add {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.products__add img {
+    opacity: 1; 
+    visibility: visible;
+
     width: 100%;
     height: 100%;
+}
+
+.products__add img.hide {
+    opacity: 0; 
+    visibility: hidden; 
 }

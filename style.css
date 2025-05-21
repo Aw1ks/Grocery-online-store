@@ -19,10 +19,6 @@
     border-radius: 10px;
 }
 
-.products__card:hover .card__delete {
-    display: block;
-}
-
 .card__image-block {
     display: flex;
     justify-content: center;
@@ -150,15 +146,23 @@
 }
 
 .card__delete {
-    display: none;
+    position: absolute;
+    border: none;
+    visibility: hidden; 
     width: 30px; 
     height: 30px;
-    position: absolute;
     right: -10px; 
     top: -15px;
-    cursor: pointer;
+    background-color: transparent;
     background-image: url('media/delete.svg');
     background-position: center;
-    background-size: cover;
+    background-size: cover;    
+    cursor: pointer;
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out; 
+}
 
+.products__card:hover .card__delete {
+    opacity: 1;
+    visibility: visible; 
 }

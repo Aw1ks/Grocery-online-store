@@ -19,7 +19,7 @@
     border-radius: 10px;
 }
 
-.products__card:hover .delete-icon {
+.products__card:hover .card__delete {
     display: block;
 }
 
@@ -62,19 +62,6 @@
     bottom: 10px;
     font-weight: 700;
     font-size: 20px;
-}
-
-.delete-icon {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 90px;
-    height: 90px;
-    background-image: url('media/delete.svg');
-    background-position: center;
-    background-size: cover;
-    cursor: pointer;
 }
 
 .card__cost::after {
@@ -130,4 +117,48 @@
 .products__add img.hide {
     opacity: 0; 
     visibility: hidden; 
+}
+
+
+.form__fields {
+    position: absolute; 
+
+    opacity: 0; 
+    visibility: hidden; 
+
+    width: 85%; 
+}
+
+.form__fields input,
+.form__fields textarea,
+.form__fields select {
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.form__fields > *:not(:last-child) {
+    margin-bottom: 10px; 
+}
+
+.button-block {
+    text-align: center;
+}
+
+.form__fields.show { 
+    opacity: 1;     
+    visibility: visible; 
+}
+
+.card__delete {
+    display: none;
+    width: 30px; 
+    height: 30px;
+    position: absolute;
+    right: -10px; 
+    top: -15px;
+    cursor: pointer;
+    background-image: url('media/delete.svg');
+    background-position: center;
+    background-size: cover;
+
 }

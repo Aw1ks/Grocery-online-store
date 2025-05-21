@@ -33,6 +33,7 @@ let product_counter = parseInt(localStorage.getItem('counter')) || 0;
 
 console.log("Initial product counter:", product_counter);
 
+
 function createProdcut(card) {
     product_counter++;
     localStorage.setItem('counter', product_counter);
@@ -52,6 +53,7 @@ function createProdcut(card) {
     }
 }
 
+
 function appendProducts(product) {
     let prod_card_div = document.createElement('div');
     prod_card_div.className = 'products__card';
@@ -68,25 +70,17 @@ function appendProducts(product) {
             <div class="card__name">${product.card_name}</div>
             <div class="card__cost">${product.price}</div>
         </div>
-        <div class="delete-icon"></div>
+        <button class="card__delete"></button>
     `;
 
     products_div.prepend(prod_card_div);
 
-    let delete_icon = prod_card_div.querySelector('.delete-icon');
+    let delete_icon = prod_card_div.querySelector('.card__delete');
     delete_icon.addEventListener('click', function() {
         prod_card_div.remove();
         products = products.filter(test_product => test_product.counter !== product.counter);
         localStorage.setItem('products', JSON.stringify(products));
     });
-}
-
-
-let img_add = document.querySelector('.products__add img');
-
-function hideImage() {
-    // img_add.classList.add('hide');
-    img_add.remove();
 }
 
 
@@ -105,50 +99,69 @@ function createInput(labelText, inputClass, inputId) {
 }
 
 
-let presence_product_form = false;
-
 div_add_products.addEventListener('click', function () {
-    if (!presence_product_form) {
+    let img_add = document.querySelector('.products__add img');
+    img_add.classList.add('hide');
+    
+    let div_form_fields = document.createElement('div');
+    div_form_fields.classList.add('form__fields', 'show');
+    
+    let form_add__form = document.createElement('form');
+    form_add__form.classList.add('add__form');
+    
+    let image_form = createInput('Путь до изображения:', 'form__image-path', 'image-path');
+    let rating_form = createInput('Оценка товара:', 'form__rating', 'rating');
+    let value_form = createInput('Калорийность товара:', 'form__value', 'value');
+    let name_form = createInput('Название товара:', 'form__name', 'name');
+    let cost_form = createInput('Цена товара:', 'form__cost', 'cost');
+    
+    form_add__form.appendChild(image_form);
+    form_add__form.appendChild(rating_form);
+    form_add__form.appendChild(value_form);
+    form_add__form.appendChild(name_form);
+    form_add__form.appendChild(cost_form);
+    
+    let div_button_block = document.createElement('div');
+    div_button_block.classList.add('button-block');
+    
+    let button_form__button = document.createElement('button');
+    button_form__button.textContent = 'Отправить';
+    button_form__button.classList.add('form__button');
+    button_form__button.type = 'submit';
+    
+    div_button_block.appendChild(button_form__button);
+    
+    div_form_fields.appendChild(form_add__form);
+    div_form_fields.appendChild(div_button_block);
+    div_add_products.appendChild(div_form_fields);
+    
+    button_form__button.addEventListener('click', function (event) {
+        event.preventDefault();
+        
+        if (form_add__form.checkValidity()) {
+            let image = document.getElementById('image-path').value;
+            let rating = document.getElementById('rating').value;
+            let calorie = document.getElementById('value').value;
+            let card_name = document.getElementById('name').value;
+            let price = document.getElementById('cost').value;
+            
+            let newCard = {
+                image: image,
+                rating: rating,
+                calorie: calorie,
+                card_name: card_name,
+                price: price,
+            };
+            
+            appendProducts(newCard);
+            createProdcut(newCard);
 
-        let div_form_fields = document.createElement('div');
-        div_form_fields.classList.add('form__fields');
-
-        let form_add__form = document.createElement('form');
-        form_add__form.classList.add('add__form');
-
-        let image_form = createInput('Путь до изображения:', 'form__image-path', 'image-path');
-        let rating_form = createInput('Оценка товара:', 'form__rating', 'rating');
-        let value_form = createInput('Калорийность товара:', 'form__value', 'value');
-        let name_form = createInput('Название товара:', 'form__name', 'name');
-        let cost_form = createInput('Цена товара:', 'form__cost', 'cost');
-
-        form_add__form.appendChild(image_form);
-        form_add__form.appendChild(rating_form);
-        form_add__form.appendChild(value_form);
-        form_add__form.appendChild(name_form);
-        form_add__form.appendChild(cost_form);
-
-        let div_button_block = document.createElement('div');
-        div_button_block.classList.add('button-block');
-
-        let button_form__button = document.createElement('button');
-        button_form__button.textContent = 'Отправить';
-        button_form__button.classList.add('form__button');
-        button_form__button.type = 'submit';
-
-        div_button_block.appendChild(button_form__button);
-
-        div_form_fields.appendChild(form_add__form);
-        div_form_fields.appendChild(div_button_block);
-        div_add_products.appendChild(div_form_fields)
-
-        // appendProducts(card);
-        // createProdcut(card);
-        hideImage();
-    }
-    presence_product_form = true;
-});
-
+            location.reload()
+        } else {
+            alert('Заполните все поля');
+        }
+    });
+}, { once: true });
 
 
 window.onload = function () {

@@ -1,5 +1,8 @@
 @import url('media/https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
 
+
+
+
 .products {
     display: flex;
     flex-wrap: wrap;
@@ -7,6 +10,8 @@
     padding: 20px;
     margin: 20px;
 }
+
+
 
 .products__card {
     width: 15%;
@@ -61,8 +66,8 @@
 }
 
 .card__cost::after {
-    display: block;   
     content: '';
+    display: block;
     background-image: url('media/rub.svg');
     background-size: cover;
     width: 20px;
@@ -75,8 +80,8 @@
 }
 
 .card__rating::after {
-    display: block;
     content: '';
+    display: block;
     background-image: url('media/star.svg');
     background-size: cover;
     width: 18px;
@@ -84,14 +89,11 @@
 }
 
 .products__add {
-    display: flex; 
+    display: flex;
     justify-content: center;
-    align-items: center; 
-    cursor: pointer;
-    position: relative; 
-
+    align-items: center;
     width: 15%;
-    font-family: "Montserrat", sans-serif;  
+    font-family: "Montserrat", sans-serif;
     border: solid 2px rgba(129, 125, 125, 0.446);
     height: 280px;
     position: relative;
@@ -103,66 +105,149 @@
 }
 
 .products__add img {
-    opacity: 1; 
+    opacity: 1;
     visibility: visible;
-
     width: 100%;
     height: 100%;
 }
 
 .products__add img.hide {
-    opacity: 0; 
-    visibility: hidden; 
+    opacity: 0;
+    visibility: hidden;
 }
 
-
 .form__fields {
-    position: absolute; 
-
-    opacity: 0; 
-    visibility: hidden; 
-
-    width: 85%; 
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    width: 85%;
 }
 
 .form__fields input,
 .form__fields textarea,
 .form__fields select {
-    width: 100%; 
-    box-sizing: border-box; 
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form__fields > *:not(:last-child) {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 .button-block {
     text-align: center;
 }
 
-.form__fields.show { 
-    opacity: 1;     
-    visibility: visible; 
+.form__fields.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .card__delete {
     position: absolute;
     border: none;
-    visibility: hidden; 
-    width: 30px; 
+    visibility: hidden;
+    width: 30px;
     height: 30px;
-    right: -10px; 
+    right: -10px;
     top: -15px;
     background-color: transparent;
     background-image: url('media/delete.svg');
     background-position: center;
-    background-size: cover;    
+    background-size: cover;
     cursor: pointer;
-    opacity: 0; 
-    transition: opacity 0.3s ease-in-out; 
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
-.products__card:hover .card__delete {
+.products__card:hover 
+
+.card__delete {
     opacity: 1;
-    visibility: visible; 
+    visibility: visible;
+}
+
+.modal {
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: top 0.3s ease-in-out;
+    font-family: "Montserrat", sans-serif;
+}
+
+.modal__title {
+    font-weight: bold;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+.modal__buttons {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.modal__button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.modal__buttons > *:first-child {
+    margin-right: 10px;
+}
+
+.modal.show {
+    top: 3%;
+}
+
+@keyframes shaky {
+    0% { top: 0%; }
+    50% { top: 6%; }
+    100% { top: 3%; }
+}
+
+@keyframes shaky-close {
+    0% { top: 3%; }
+    50% { top: 7%; }
+    100% { top: -100%; }
+}
+
+.modal.active {
+    animation-name: shaky;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.modal.closed {
+    animation-name: shaky-close;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shaky {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes shaky-close {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    50% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
 }

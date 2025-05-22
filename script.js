@@ -17,6 +17,7 @@ if (div_add_products) {
     div_add_products.append(img_add);
 }
 
+
 localStorage.setItem('card', JSON.stringify({
     image: 'media/2.webp',
     rating: '4,94',
@@ -30,8 +31,6 @@ let locStor_card = localStorage.getItem('card');
 let card = JSON.parse(locStor_card);
 let products = JSON.parse(localStorage.getItem('products')) || [];
 let product_counter = parseInt(localStorage.getItem('counter')) || 0;
-
-console.log("Initial product counter:", product_counter);
 
 
 function createProdcut(card) {
@@ -51,6 +50,37 @@ function createProdcut(card) {
         products.push(new_product);
         localStorage.setItem('products', JSON.stringify(products));
     }
+}
+
+
+function createModal() {
+    let modal = document.createElement('div');
+    modal.className = 'modal';
+
+    modal.classList.add('show');
+
+    let modalTitle = document.createElement('div');
+    modalTitle.className = 'modal__title';
+    modalTitle.textContent = 'Вы уверены, что хотите удалить товар?';
+    modal.appendChild(modalTitle);
+
+    let modalButtons = document.createElement('div');
+    modalButtons.className = 'modal__buttons';
+    modal.appendChild(modalButtons);
+
+    let yesButton = document.createElement('button');
+    yesButton.id = 'yes';
+    yesButton.className = 'modal__button';
+    yesButton.textContent = 'Да';
+    modalButtons.appendChild(yesButton);
+
+    let noButton = document.createElement('button');
+    noButton.id = 'no';
+    noButton.className = 'modal__button';
+    noButton.textContent = 'Нет';
+    modalButtons.appendChild(noButton);
+
+    return modal;
 }
 
 
@@ -77,9 +107,35 @@ function appendProducts(product) {
 
     let delete_icon = prod_card_div.querySelector('.card__delete');
     delete_icon.addEventListener('click', function() {
-        prod_card_div.remove();
-        products = products.filter(test_product => test_product.counter !== product.counter);
-        localStorage.setItem('products', JSON.stringify(products));
+        let modal = createModal();
+        body.appendChild(modal);
+
+        modal.classList.add('active');
+
+        document.getElementById('yes').addEventListener('click', function() {
+            modal.classList.remove('active');
+            modal.classList.add('closed');
+
+            modal.addEventListener('animationend', function() {
+                prod_card_div.remove();
+                products = products.filter(test_product => test_product.counter !== product.counter);
+                localStorage.setItem('products', JSON.stringify(products));
+                modal.remove();
+
+                setTimeout(function() {
+                    location.reload(); 
+                }, 600); 
+            }, { once: true });
+        });
+
+        document.getElementById('no').addEventListener('click', function() {
+            modal.classList.remove('active');
+            modal.classList.add('closed');
+
+            modal.addEventListener('animationend', function() {
+                modal.remove();
+            }, { once: true });
+        });
     });
 }
 
@@ -102,49 +158,49 @@ function createInput(labelText, inputClass, inputId) {
 div_add_products.addEventListener('click', function () {
     let img_add = document.querySelector('.products__add img');
     img_add.classList.add('hide');
-    
+
     let div_form_fields = document.createElement('div');
     div_form_fields.classList.add('form__fields', 'show');
-    
+
     let form_add__form = document.createElement('form');
     form_add__form.classList.add('add__form');
-    
+
     let image_form = createInput('Путь до изображения:', 'form__image-path', 'image-path');
     let rating_form = createInput('Оценка товара:', 'form__rating', 'rating');
     let value_form = createInput('Калорийность товара:', 'form__value', 'value');
     let name_form = createInput('Название товара:', 'form__name', 'name');
     let cost_form = createInput('Цена товара:', 'form__cost', 'cost');
-    
+
     form_add__form.appendChild(image_form);
     form_add__form.appendChild(rating_form);
     form_add__form.appendChild(value_form);
     form_add__form.appendChild(name_form);
     form_add__form.appendChild(cost_form);
-    
+
     let div_button_block = document.createElement('div');
     div_button_block.classList.add('button-block');
-    
+
     let button_form__button = document.createElement('button');
     button_form__button.textContent = 'Отправить';
     button_form__button.classList.add('form__button');
     button_form__button.type = 'submit';
-    
+
     div_button_block.appendChild(button_form__button);
-    
+
     div_form_fields.appendChild(form_add__form);
     div_form_fields.appendChild(div_button_block);
     div_add_products.appendChild(div_form_fields);
-    
+
     button_form__button.addEventListener('click', function (event) {
         event.preventDefault();
-        
+
         if (form_add__form.checkValidity()) {
             let image = document.getElementById('image-path').value;
             let rating = document.getElementById('rating').value;
             let calorie = document.getElementById('value').value;
             let card_name = document.getElementById('name').value;
             let price = document.getElementById('cost').value;
-            
+
             let newCard = {
                 image: image,
                 rating: rating,
@@ -152,7 +208,7 @@ div_add_products.addEventListener('click', function () {
                 card_name: card_name,
                 price: price,
             };
-            
+
             appendProducts(newCard);
             createProdcut(newCard);
 

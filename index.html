@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Grocery online store</title>
-        <link href="style.css" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-        <!-- <div class="products"> -->
-            <!-- <div class="products__card">
-                <div class="card__image-block">
-                    <img class="card__image" src='2.webp'></img>
-                </div>
-                <div class="card__description">
-                    <div class="card__meta">
-                        <div class="card__rating">
-                            4,94
-                        </div>
-                        <div class="card__value">
-                            500 ккал.
-                        </div>
-                    </div>
-                    <div class="card__name">
-                        Стейк из грудинки индейки охлажденный Зеленая Линия, 500г.
-                    </div>
-                    <div class="card__cost">
-                        450
-                    </div>
-                </div>
-            </div> -->
-            
-            <!-- <div class="add_products">
-                <img src="media/add.svg" alt="" class="add">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Grocery online store</title>
+      <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="products">
+      <div class="products__add">
+        <img src="media/add.svg" alt="">
+  
+        <div class="form__fields">
+          <form class="add__form">
+            <label for="image-path">Путь до изображения:
+              <input type="text" id="image-path" class="form__image-path" name="image-path" required>
+            </label>
+  
+            <label for="rating">Оценка товара:
+              <input type="text" id="rating" class="form__rating" name="rating" required>
+            </label>
+  
+            <label for="value">Калорийность товара:
+              <input type="text" id="value" class="form__value" name="value" required>
+            </label>
+  
+            <label for="name">Название товара:
+              <input type="text" id="name" class="form__name" name="name" required>
+            </label>
+  
+            <label for="cost">Цена товара:
+              <input type="text" id="cost" class="form__cost" name="cost" required>
+            </label>
+  
+            <div class="button-block">
+              <button type="submit" class="form__button">Отправить</button>
             </div>
-        </div> -->
-        <script src="script.js"></script>
-    </body>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+      <script src="script.js"></script>
+  </body>
 </html>
